@@ -1,0 +1,15 @@
+{% extends "app1/padre.html" %}
+{% load static %}
+
+{% block title %}Buscar usuario{% endblock %}
+
+{% block content %}
+
+
+<form action="/app/buscarusuario/" method="GET">
+    <input type="text" name="nombre" id="nombre">
+    <input type="text" name="apellido" id="apellido">
+    <input type="submit" value="Buscar">
+</form>
+
+{% endblock %}
