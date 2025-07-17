@@ -1,0 +1,62 @@
+{% extends 'app1/padre.html' %}
+{% load static %}
+
+{% block title %}Editar Producto: {{ producto.nombre }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow rounded-lg border-0 p-4">
+                <h2 class="text-center mb-4 text-primary">Editar Producto: <br>"{{ producto.nombre }}"</h2>
+                
+               
+                {% if messages %}
+                    <div class="mb-3">
+                        {% for message in messages %}
+                            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <form method="post" enctype="multipart/form-data"> 
+                    {% csrf_token %}
+
+                    {% if producto.imagen %}
+                        <div class="text-center mb-4">
+                            <p class="mb-2 text-muted">Imagen actual del producto:</p>
+                            <img src="{{ producto.imagen.url }}" alt="Imagen de {{ producto.nombre }}" 
+                                 class="img-fluid rounded-3 shadow-sm" 
+                                 style="max-width: 250px; height: auto; object-fit: cover;">
+                            <small class="d-block mt-1 text-muted">Sube una nueva imagen para reemplazarla.</small>
+                        </div>
+                    {% else %}
+                        <div class="text-center mb-4">
+                            <p class="text-muted">Este producto no tiene imagen subida.</p>
+                            <img src="{% static 'img/default_product.png' %}" alt="Producto sin imagen" 
+                                 class="img-fluid rounded-3 shadow-sm" 
+                                 style="max-width: 150px; height: auto; object-fit: cover;">
+                            <small class="d-block mt-1 text-muted">Sube una imagen para tu producto.</small>
+                        </div>
+                    {% endif %}
+
+                    {{ form.as_p }} 
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-4">
+                        <button type="submit" class="btn btn-success btn-lg">
+                            <i class="bi bi-save"></i> Guardar Cambios
+                        </button>
+
+                        <a href="{% url 'MisProducto' %}" class="btn btn-secondary btn-lg">
+                            <i class="bi bi-x-circle"></i> Cancelar y Volver
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

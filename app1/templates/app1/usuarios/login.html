@@ -1,0 +1,35 @@
+{% extends 'app1/padre.html' %}
+{% load static %}
+
+{% block title %}Iniciar Sesion{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+
+            <div class="card shadow">
+                <div class="card-body">
+                    <h4 class="card-title text-center mb-4">
+                        Iniciar Sesion
+                    </h4>
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            {{ form.as_p }}
+                        </div>
+                        <div class="text-center d-flex justify-content-center gap-2">
+                            <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                            <a href="{% url 'Registrarse' %}" class="btn btn-outline-secondary">Registrarse</a>
+                        </div>
+
+                    </form>
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

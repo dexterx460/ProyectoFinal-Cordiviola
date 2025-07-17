@@ -1,0 +1,45 @@
+{% extends 'app1/padre.html' %}
+
+{% load static %}
+
+{% block title %}Subir producto{% endblock %}
+
+{% block content %}
+
+<body class="bg-pixel-dark text-gray-200 min-h-screen">
+    <!-- Header (se mantiene igual) -->
+
+    <!-- Sobre Mí Page Content -->
+    <main class="container mx-auto px-4 py-12">
+        <!-- Page Header -->
+        <div class="mb-12 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-white bg-clip-text text-transparent">
+                Sobre Mí
+            </h1>
+        </div>
+
+        <!-- Content -->
+        <div class="max-w-3xl mx-auto bg-gray-800 rounded-xl shadow-lg p-8 border border-gray-700">
+            <h2 class="text-2xl font-bold mb-4 text-blue-400">Mi Historia</h2>
+            <p class="text-gray-300 mb-6">
+                Hola, soy el fundador del proyecto PixelMarket. Mi nombre es Octavio Cordiviola y para este trabajo final decidi realizar este comercio electronico. Soy de Buenos aires y tengo 17 años.
+            </p>
+
+            <h2 class="text-2xl font-bold mb-4 text-blue-400">Mi Filosofía</h2>
+            <p class="text-gray-300 mb-6">
+                Creo en la tecnología como herramienta para conectar personas y facilitar la vida de las personas.
+                Mi objetivo es crear soluciones simples pero poderosas que beneficien a todos los usuarios.
+            </p>
+
+
+            <div class="border-t border-gray-700 pt-6">
+                <h2 class="text-2xl font-bold mb-4 text-blue-400">Contacto</h2>
+                <p class="text-gray-300">
+                    <i class="fas fa-envelope mr-2 text-blue-400"></i> 
+                    contacto@pixelmarket.example.com
+                </p>
+            </div>
+        </div>
+    </main>
+
+{% endblock %}

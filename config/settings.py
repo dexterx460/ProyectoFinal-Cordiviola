@@ -10,6 +10,46 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, '/media')
+
+LOGIN_URL = '/app/login'
+
+
+# ... (tus otras configuraciones)
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        # Aquí puedes usar os.path.join para asegurarte de la ruta si tienes una carpeta templates a nivel de proyecto
+        # Por ahora, podemos dejar DIRS vacío si tus templates están dentro de las apps
+        'DIRS': [], 
+        'APP_DIRS': True, # Esto debe ser True para que busque en las apps
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+
+# ... (asegúrate de que 'app1' esté en INSTALLED_APPS)
+INSTALLED_APPS = [
+    # ...
+    'app1', # ¡Importante!
+    # ...
+]
+
+# ... (resto de tus settings)
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.

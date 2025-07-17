@@ -1,0 +1,115 @@
+{% extends 'app1/padre.html' %}
+
+{% load static %}
+
+{% block title %}Productos{% endblock %}
+
+{% block content %}
+
+<body class="bg-pixel-dark text-gray-200 min-h-screen">
+    <!-- Header (se mantiene igual) -->
+
+    <!-- Productos Page Content -->
+    <main class="container mx-auto px-4 py-12">
+        <!-- Page Header -->
+        <div class="mb-12 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-white bg-clip-text text-transparent">
+                Nuestros Productos
+            </h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                Descubre los productos compartidos por nuestra comunidad
+            </p>
+        </div>
+
+        <!-- Product Filters -->
+        <div class="mb-8 bg-gray-800 rounded-lg p-4 border border-gray-700">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <div class="flex-1 min-w-[200px]">
+                    <label class="block text-gray-400 mb-2">Buscar</label>
+                    <input type="text" placeholder="Buscar productos..." class="w-full bg-gray-700 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div class="flex-1 min-w-[200px]">
+                    <label class="block text-gray-400 mb-2">Categoría</label>
+                    <select class="w-full bg-gray-700 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option>Todas las categorías</option>
+                        <option>Electrónica</option>
+                        <option>Hogar</option>
+                        <option>Moda</option>
+                        <option>Libros</option>
+                    </select>
+                </div>
+                <div class="flex-1 min-w-[200px]">
+                    <label class="block text-gray-400 mb-2">Ordenar por</label>
+                    <select class="w-full bg-gray-700 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option>Más recientes</option>
+                        <option>Precio: Menor a mayor</option>
+                        <option>Precio: Mayor a menor</option>
+                        <option>Mejor valorados</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+<div class="container mt-5 mb-5">
+    <h2 class="mb-4 text-center text-primary fw-bold">Nuestros Productos</h2>
+    <p class="text-center text-muted mb-5">Aquí puedes ver un listado de todos nuestros productos disponibles.</p>
+
+    {% if productos %} {# Asegúrate de que tu vista pasa los productos bajo la variable 'productos' #}
+    <div class="table-responsive shadow-sm rounded-lg overflow-hidden">
+        <table class="table table-hover table-striped mb-0">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th scope="col">Imagen</th>
+                    <th scope="col">Nombre del Producto</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Subido por</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %} {# Iteramos sobre la lista 'productos' #}
+                <tr>
+                    <td>
+                        {% if producto.imagen %}
+                            <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="img-thumbnail" style="width: 80px; height: 80px; object-fit: cover;">
+                        {% else %}
+                            <img src="{% static 'img/default_product.png' %}" alt="Sin imagen" class="img-thumbnail" style="width: 80px; height: 80px; object-fit: cover;">
+                        {% endif %}
+                    </td>
+                    <td>{{ producto.nombre }}</td>
+                    <td>{{ producto.descripcion|truncatechars:100 }}</td>
+                    <td>${{ producto.precio }}</td>
+                    <td>{{ producto.stock }}</td>
+                    <td>{{ producto.usuario_creador.username }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <div class="alert alert-info text-center py-5" role="alert">
+            <h4 class="alert-heading">¡No hay productos disponibles!</h4>
+            <p>Parece que aún no se ha subido ningún producto a nuestra tienda.</p>
+            <hr>
+            {% if user.is_authenticated %}
+                <p class="mb-0">¿Por qué no eres el primero en subir uno?</p>
+                <a href="{% url 'subir_producto' %}" class="btn btn-success mt-3">¡Sube un Nuevo Producto!</a>
+            {% else %}
+                <p class="mb-0">Inicia sesión o regístrate para poder subir productos.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+
+        <!-- Call to Action -->
+        <div class="text-center mt-12 mb-8">
+            <h3 class="text-2xl font-bold mb-4">¿Tienes algo para vender?</h3>
+            <p class="text-gray-300 mb-6 max-w-2xl mx-auto">Únete a nuestra comunidad y empieza a compartir tus productos con miles de compradores potenciales.</p>
+            <a href="{% url "subir_producto" %}" class="inline-block bg-gradient-to-r from-blue-600 to-blue-800 text-white px-8 py-3 rounded-full font-medium hover:from-blue-700 hover:to-blue-900 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 transform">
+                <i class="fas fa-plus mr-2"></i> Publicar Producto
+            </a>
+        </div>
+    </main>
+
+{% endblock %}

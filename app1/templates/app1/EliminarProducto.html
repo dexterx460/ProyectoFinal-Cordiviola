@@ -1,0 +1,35 @@
+{% extends 'app1/padre.html' %}
+
+{% load static %}
+
+{% block title %}Subir producto{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h4 class="card-title text-center mb-4">Subir Producto</h4>
+                    {# Mostrar mensajes de Django #}
+                    {% if messages %}
+                        <ul class="messages list-unstyled">
+                            {% for message in messages %}
+                                <li{% if message.tags %} class="{{ message.tags }} alert alert-info"{% endif %}>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        {{ form.as_p }} {# Renderiza los campos del formulario como párrafos #}
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Guardar Producto</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'app1/padre.html' %}
+
+{% load static %}
+
+{% block title %}Productos subidos{% endblock %}
+
+{% block content %}
+ 
+ <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card shadow">
+                <div class="card-body">
+                    <p class="text-center">Aquí puedes gestionar tu perfil y tus productos.</p>
+
+                    <hr>
+
+                    {% if messages %}
+                        <ul class="messages list-unstyled">
+                            {% for message in messages %}
+                                <li class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}" role="alert">
+                                    {{ message }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    
+
+                    <div class="row">
+                        {% if productos_subidos %}
+                            {% for producto in productos_subidos %}
+                            <div class="col-md-6 mb-4"> {# Usamos col-md-6 para dos columnas por fila #}
+                                <div class="card h-100 shadow-sm">
+                                    <div class="row no-gutters">
+                                        <div class="col-md-4">
+                                            {% if producto.imagen %}
+                                                <img src="{{ producto.imagen.url }}" class="card-img" alt="{{ producto.nombre }}" style="height: 150px; width: 100%; object-fit: cover;">
+                                            {% else %}
+                                                {# Asegúrate de tener una imagen de marcador de posición si no hay imagen subida #}
+                                                <img src="{% static 'img/default_product.png' %}" class="card-img" alt="Producto sin imagen" style="height: 150px; width: 100%; object-fit: cover;">
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ roducto.nombre }}</h5>
+                                                <p class="card-text"><small class="text-muted">Precio: ${{ producto.precio }} | Stock: {{ producto.stock }}</small></p>
+                                                {# La descripción truncada es opcional, si no la quieres completa #}
+                                                <p class="card-text">{{ producto.descripcion|truncatechars:80 }}</p>
+                                                <div class="d-flex justify-content-end gap-2">
+                                                    {# Botón de Editar (futuro): Asegúrate de tener una URL y vista para 'editar_producto' #}
+                                                    <a href="{% url 'editar_producto' producto.id %}" class="btn btn-primary btn-sm" title="Editar Producto">
+                                                        <i class="bi bi-pencil"></i> {# Icono de lápiz (requiere Bootstrap Icons o Font Awesome) #}
+                                                    </a>
+                                                    {# Botón de Eliminar #}
+                                                    <form method="post" action="{% url 'EliminarProducto' producto.id %}" onsubmit="return confirm('¿Estás seguro de que quieres eliminar este producto?');" class="d-inline">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-danger btn-sm" title="Eliminar Producto">
+                                                            <i class="bi bi-trash"></i> {# Icono de papelera #}
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="col-12">
+                                <p>Aún no has subido ningún producto.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
